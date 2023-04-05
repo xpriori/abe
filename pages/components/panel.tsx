@@ -5,9 +5,7 @@ import styles from "./cardSection.module.css";
 import { poppins } from "../../constants/fonts";
 
 type PanelPropTypes = {
-  title: {
-    text: string;
-  };
+  title: string;
   color: string;
   children: ReactElement;
 };
@@ -18,7 +16,7 @@ const Panel = ({ title, color, children }: PanelPropTypes) => {
       <Container className={styles.panelTitle}>
         <FaGlobeAmericas fill={color} size={12} />
         <Text color={color} css={{ mt: 0 }} className={poppins.className}>
-          {title.text}
+          {title}
         </Text>
       </Container>
     );

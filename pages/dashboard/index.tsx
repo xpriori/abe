@@ -170,12 +170,7 @@ const Main = () => {
       <NavbarComponent />
 
       <div className={styles.body}>
-        <Panel
-          title={{
-            text: "GLOBAL MARKETS",
-          }}
-          color={COLORS.blue700}
-        >
+        <Panel title="GLOBAL MARKETS" color={COLORS.blue700}>
           <Container style={{ alignItems: "center" }}>
             <CardSection
               title={`World News`}

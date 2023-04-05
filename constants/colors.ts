@@ -3,4 +3,5 @@ export const COLORS = {
   blue700: "#005FCC",
   blue800: "#004799",
   gray200: "#E6E8EB",
+  red700: "#B80A47",
 };

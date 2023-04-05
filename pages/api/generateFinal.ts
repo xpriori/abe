@@ -53,8 +53,9 @@ export default async function (req, res) {
 }
 
 function generatePrompt(eco, geo) {
-  return `You are to combine world economic news summary: ${eco} and geopolitics ${geo} to summarize and 
+  return `You are to combine world economic news summary: ${eco} and geopolitics ${geo} to summarize very briefly and 
     come up with a final report that provide insights and market sentiment and effects to the global economic
-    output. Be brief on your summary.
+    output. Be very brief on your summary. At the end, include US Market points such as the Dow Jones, S&P 500 and Nasdaq. 
+    Also include commodities prices such as oil, gold, copper, etc.
   `;
 }

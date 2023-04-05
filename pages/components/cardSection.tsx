@@ -16,10 +16,9 @@ import { useRef, useState } from "react";
 import Bubble from "./bubble";
 
 const CardSection = ({ ...props }) => {
-  const { title, text, color, fullReport } = props;
+  const { title, text, color, fullReport, date } = props;
   const [toggle, setToggle] = useState(false);
   const [summary, setSummary] = useState<any>();
-  const [geop, setGeop] = useState<any>();
   const [query, setQuery] = useState([]);
 
   const inputRef = useRef<any>();
@@ -111,8 +110,10 @@ const CardSection = ({ ...props }) => {
             {title}
           </Text>
         </Card.Header>
-        <Card.Divider />
+
         <Card.Body>
+          {text ? <Text className={styles.date}>{date}</Text> : null}
+
           <Row justify="center" align="center">
             {text ? (
               <Text className={styles.content}>{text}</Text>
@@ -127,14 +128,7 @@ const CardSection = ({ ...props }) => {
               flat
               rounded
               auto
-              style={{
-                width: 100,
-                color: "#004799",
-                fontSize: 10,
-                marginTop: 20,
-                marginBottom: 20,
-                borderRadius: 10,
-              }}
+              className={styles.toggle}
               iconRight={<MdOutlineSummarize fill="#004799" size={12} />}
             >
               {!summary && toggle ? (

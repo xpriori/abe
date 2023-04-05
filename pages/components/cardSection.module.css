@@ -1,12 +1,8 @@
 .query_container {
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-start; */
-  /* align-items: flex-start; */
   height: 100%;
   width: 100%;
-  /* padding-left: 10px; */
-  /* background-color: #eee; */
   overflow-y: scroll;
   margin-top: 10px;
   margin-left: 0;
@@ -19,9 +15,13 @@
 /* PANEL */
 
 .panelTitle {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+.panelTitleLabel {
+  margin-left: 10px;
 }
 
 .query_container::-webkit-scrollbar-thumb {
@@ -40,19 +40,36 @@
   border-radius: 2px !important;
   border-color: #eee;
   width: 100%;
-  margin: 0px;
+  margin: 0px !important;
 }
 .header {
   background-color: #eee;
-  display: flex;
+  display: flex !important;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between !;
+  width: auto;
+}
+
+.date {
+  font-size: 10px;
+  float: right !important;
+  font-weight: 800;
+  color: lightslategray !important;
 }
 
 .content {
   font-size: 16px;
   font-weight: 300;
+}
+
+.toggle {
+  width: 100% !important;
+  color: "#004799";
+  font-size: 10px !important;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 .summary {
@@ -81,8 +98,8 @@
 }
 
 .hSpacer {
-  display: flex;
-  width: 100%;
+  display: flex !important;
+  min-width: 100px;
 }
 
 .footer {
@@ -92,7 +109,7 @@
 }
 
 .queryInput {
-  width: 64vw !important;
+  width: 60vw !important;
   /* padding: 10px; */
   /* font-size: 16px; */
 }

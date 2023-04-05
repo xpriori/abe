@@ -13,12 +13,15 @@ const Main = () => {
   const today = new Date().toDateString();
   const [globalData, setGlobalData] = useState<any>();
   const [geopoliticsData, setGeopoliticsData] = useState<any>();
+  const [phData, setPhData] = useState<any>();
   const [docId, setDocId] = useState<any>();
   const [organizedGlobal, setOrganizedGlobal] = useState<any>();
   const [organizedGeopolitics, setOrganizedGeopolitics] = useState<any>();
   const [organizedFinal, setOrganizedFinal] = useState<any>();
+  const [organizedPh, setOrganizedPh] = useState<any>();
   const globalInstance = collection(db, "global");
   const geopoliticsInstance = collection(db, "geopolitics");
+  const phInstance = collection(db, "ph");
 
   const [windowSize, setWindowSize] = useState({
     width: undefined,
@@ -111,8 +114,8 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    if (geopoliticsData) Organizer(geopoliticsData, setOrganizedGeopolitics);
-  }, [geopoliticsData]);
+    if (organizedGlobal) Organizer(geopoliticsData, setOrganizedGeopolitics);
+  }, [organizedGlobal]);
 
   ///////////////////////////////////////////////////////////////////////////
   // -*- FINAL GLOBAL REPORT -*- ///////////////////////////////////////////
@@ -143,9 +146,44 @@ const Main = () => {
   }
 
   useEffect(() => {
-    if (geopoliticsData)
+    if (organizedGeopolitics)
       GenerateFinal(globalData, geopoliticsData, setOrganizedFinal);
-  }, [globalData, geopoliticsData]);
+  }, [organizedGeopolitics]);
+
+  /////////////////////////////////
+  // -*- PHILIPPINE MARKET INSTANCE -*-
+  /////////////////////////////////
+  useEffect(() => {
+    const docRef = doc(phInstance, today);
+
+    getDoc(docRef).then((doc) => {
+      const data = doc.data();
+      setDocId(doc.id);
+      const items = [];
+
+      data &&
+        data.items.forEach((element) => {
+          items.push(element);
+        });
+
+      const headlines = items.map((item) => {
+        return item["headlines"];
+      });
+
+      const report = headlines.join(", ");
+      setPhData(report);
+    });
+
+    return () => {
+      docRef;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (organizedFinal) Organizer(phData, setOrganizedPh);
+  }, [organizedFinal]);
+
+  ///////////////////////////////////////
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -165,12 +203,12 @@ const Main = () => {
   return (
     <NextUIProvider>
       <Head>
-        <title>World News {docId}</title>
+        <title>World News</title>
       </Head>
       <NavbarComponent />
 
       <div className={styles.body}>
-        <Panel title="GLOBAL MARKETS" color={COLORS.blue700}>
+        <Panel icon="🌎" title="GLOBAL MARKETS" color={COLORS.blue700}>
           <Container style={{ alignItems: "center" }}>
             <CardSection
               title={`World News`}
@@ -189,11 +227,23 @@ const Main = () => {
             />
             <Spacer y={2} />
             <CardSection
-              title={`Final Report`}
+              title={`Final Report - Global`}
               text={organizedFinal}
               color={COLORS.blue800}
               date={docId}
               fullReport={`${globalData} ${geopoliticsData}`}
+            />
+          </Container>
+        </Panel>
+
+        <Panel icon="🇵🇭" title="THE PHILIPPINES" color={"black"}>
+          <Container style={{ alignItems: "center" }}>
+            <CardSection
+              title={`Market Summary`}
+              text={organizedPh}
+              color={COLORS.blue800}
+              date={docId}
+              fullReport={phData}
             />
           </Container>
         </Panel>

@@ -4,7 +4,6 @@ import { Container, NextUIProvider, Spacer } from "@nextui-org/react";
 import Panel from "../components/panel";
 import CardSection from "../components/cardSection";
 import { COLORS } from "../../constants/colors";
-import { poppinsBold } from "../../constants/fonts";
 import { doc, getDoc, collection } from "firebase/firestore";
 import { db } from "../../utils/🔥";
 import { useEffect, useState } from "react";
@@ -174,7 +173,6 @@ const Main = () => {
         <Panel
           title={{
             text: "GLOBAL MARKETS",
-            styles: `${poppinsBold.className} ${styles.titleText}`,
           }}
           color={COLORS.blue700}
         >

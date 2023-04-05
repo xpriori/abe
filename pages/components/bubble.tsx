@@ -14,7 +14,7 @@ const Bubble = (props: BubblePropTypes) => {
   const Robot = () => {
     return (
       <>
-        <div style={{ width: 20 }}>
+        <div className={styles.avatarContainer}>
           <BsRobot size={11} fill="#7828C8" className={styles.ai} />
         </div>
         <Text className={styles.robot}>{text}</Text>
@@ -24,7 +24,9 @@ const Bubble = (props: BubblePropTypes) => {
   const Human = () => {
     return (
       <>
-        <RiUserLine size={10} fill="#0E8AAA" className={styles.avatar} />
+        <div className={styles.avatarContainer}>
+          <RiUserLine size={10} fill="#0E8AAA" className={styles.avatar} />
+        </div>
         <Text className={styles.bubble}>{text}</Text>
       </>
     );

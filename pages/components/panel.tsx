@@ -1,7 +1,7 @@
 import { Container, Text, Spacer } from "@nextui-org/react";
 import { ReactElement } from "react";
 import { FaGlobeAmericas } from "react-icons/fa";
-
+import styles from "./cardSection.module.css";
 type PanelPropTypes = {
   title: {
     text: string;
@@ -14,9 +14,7 @@ type PanelPropTypes = {
 const Panel = ({ title, color, children }: PanelPropTypes) => {
   const Title = () => {
     return (
-      <Container
-        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-      >
+      <Container className={styles.panelTitle}>
         <FaGlobeAmericas fill={color} size={12} />
         <Text color={color} css={{ mt: 0 }} className={`${title.styles}`}>
           {title.text}

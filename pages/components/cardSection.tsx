@@ -115,7 +115,7 @@ const CardSection = ({ ...props }) => {
         <Card.Body>
           <Row justify="center" align="center">
             {text ? (
-              <Text style={{ fontSize: 16, fontWeight: "300" }}>{text}</Text>
+              <Text className={styles.content}>{text}</Text>
             ) : (
               <Loading color="default" size="sm" />
             )}
@@ -148,37 +148,23 @@ const CardSection = ({ ...props }) => {
           ) : null}
 
           {toggle ? (
-            <Row
-              justify="center"
-              align="center"
-              style={{
-                backgroundColor: "#f1f3f5",
-                padding: 7,
-                borderRadius: 2,
-              }}
-            >
-              <Text style={{ fontSize: 16, fontWeight: "200" }}>
-                {summary || null}
-              </Text>
+            <Row justify="center" align="center" className={styles.summary}>
+              <Text className={styles.summaryText}>{summary || null}</Text>
             </Row>
           ) : null}
 
           <Spacer y={1} />
 
           {/* QUERY */}
-          {query.length ? <Card.Divider style={{ marginBottom: 10 }} /> : null}
+          {query.length ? <Card.Divider className={styles.divider} /> : null}
           {query.length ? (
-            <div style={{ width: "100%", justifyContent: "center" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
+            <div className={styles.queryMain}>
+              <div className={styles.querySubmain}>
                 <MdPlayArrow size={14} fill={"gray"} />
-                <Text
-                  size={10}
-                  color={"gray"}
-                  style={{ display: "flex", width: "100%" }}
-                >
+                <Text size={10} color={"gray"} className={styles.hSpacer}>
                   Begin Query
                 </Text>
-                <div style={{ display: "flex", width: "100%" }}></div>
+                <div className={styles.hSpacer}></div>
                 <Button
                   color="warning"
                   flat
@@ -213,19 +199,11 @@ const CardSection = ({ ...props }) => {
         />
         {text ? (
           <Card.Footer>
-            <Row
-              justify="flex-end"
-              style={{ alignItems: "center", justifyContent: "center" }}
-            >
+            <Row justify="flex-end" className={styles.footer}>
               <Input
-                className={poppins.className}
+                className={`${styles.queryInput} ${poppins.className}`}
                 size="lg"
                 placeholder="Type your query here..."
-                style={{
-                  width: "55vw",
-                  padding: 10,
-                  fontSize: 16,
-                }}
                 id="query-input-box"
                 aria-label="query-input-box"
                 ref={inputRef}
@@ -244,7 +222,7 @@ const CardSection = ({ ...props }) => {
                 color="primary"
                 rounded
                 flat
-                style={{ borderRadius: 16, marginLeft: 10, padding: 21 }}
+                className={styles.queryButton}
                 onPress={() => {
                   handleHumanQuerySubmit(inputRef.current?.value);
                   inputRef.current.value = "";

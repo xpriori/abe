@@ -1,4 +1,4 @@
-import { Container, Grid, Text, Spacer } from "@nextui-org/react";
+import { Container, Text, Spacer } from "@nextui-org/react";
 import { ReactElement } from "react";
 import { FaGlobeAmericas } from "react-icons/fa";
 
@@ -8,11 +8,10 @@ type PanelPropTypes = {
     styles: string;
   };
   color: string;
-
   children: ReactElement;
 };
 
-export default function Panel({ title, color, children }: PanelPropTypes) {
+const Panel = ({ title, color, children }: PanelPropTypes) => {
   const Title = () => {
     return (
       <Container
@@ -27,7 +26,7 @@ export default function Panel({ title, color, children }: PanelPropTypes) {
   };
 
   return (
-    <div style={{}}>
+    <div>
       <Spacer y={1} />
       <Title />
       <Spacer y={1} />
@@ -35,4 +34,5 @@ export default function Panel({ title, color, children }: PanelPropTypes) {
       {children}
     </div>
   );
-}
+};
+export default Panel;

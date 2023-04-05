@@ -27,3 +27,17 @@
 .clear_button {
   font-size: 10px;
 }
+
+.card {
+  border-radius: 2px !important;
+  border-color: #eee;
+  width: 100%;
+  margin: 0px;
+}
+.header {
+  background-color: #eee;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

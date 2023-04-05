@@ -14,8 +14,10 @@ const Main = () => {
   const today = new Date().toDateString();
   const [globalData, setGlobalData] = useState<any>();
   const [geopoliticsData, setGeopoliticsData] = useState<any>();
+  const [docId, setDocId] = useState<any>();
   const [organizedGlobal, setOrganizedGlobal] = useState<any>();
   const [organizedGeopolitics, setOrganizedGeopolitics] = useState<any>();
+  const [organizedFinal, setOrganizedFinal] = useState<any>();
   const globalInstance = collection(db, "global");
   const geopoliticsInstance = collection(db, "geopolitics");
 
@@ -57,7 +59,6 @@ const Main = () => {
     getDoc(docRef).then((doc) => {
       const data = doc.data();
       const items = [];
-      console.log(data);
 
       data &&
         data.items.forEach((element) => {
@@ -89,8 +90,8 @@ const Main = () => {
 
     getDoc(docRef).then((doc) => {
       const data = doc.data();
+      setDocId(doc.id);
       const items = [];
-      console.log(data);
 
       data &&
         data.items.forEach((element) => {
@@ -114,6 +115,39 @@ const Main = () => {
     if (geopoliticsData) Organizer(geopoliticsData, setOrganizedGeopolitics);
   }, [geopoliticsData]);
 
+  ///////////////////////////////////////////////////////////////////////////
+  // -*- FINAL GLOBAL REPORT -*- ///////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+
+  async function GenerateFinal(eco: string, geo: string, callback) {
+    try {
+      const response = await fetch("/api/generateFinal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ economic: eco, geopolitics: geo }),
+      });
+
+      const org = await response.json();
+      if (response.status !== 200) {
+        throw (
+          globalData.error ||
+          new Error(`Request failed with status ${response.status}`)
+        );
+      }
+
+      callback(org.result);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  useEffect(() => {
+    if (geopoliticsData)
+      GenerateFinal(globalData, geopoliticsData, setOrganizedFinal);
+  }, [globalData, geopoliticsData]);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const handleResize = () => {
@@ -125,8 +159,6 @@ const Main = () => {
 
       window.addEventListener("resize", handleResize);
 
-      console.log(windowSize.width);
-
       return () => window.removeEventListener("resize", handleResize);
     }
   }, [windowSize]);
@@ -134,7 +166,7 @@ const Main = () => {
   return (
     <NextUIProvider>
       <Head>
-        <title>World News</title>
+        <title>World News {docId}</title>
       </Head>
       <NavbarComponent />
 
@@ -148,22 +180,27 @@ const Main = () => {
         >
           <Container style={{ alignItems: "center" }}>
             <CardSection
-              title="World Economy"
+              title={`World News`}
               text={organizedGlobal}
               color={COLORS.blue800}
               fullReport={globalData}
+              date={docId}
             />
             <Spacer y={2} />
             <CardSection
-              title="Geopolitics"
+              title={`Geopolitics`}
               text={organizedGeopolitics}
               color={COLORS.blue800}
+              date={docId}
+              fullReport={geopoliticsData}
             />
             <Spacer y={2} />
             <CardSection
-              title="Global Final Report"
-              text={"data && data.global.final"}
+              title={`Final Report`}
+              text={organizedFinal}
               color={COLORS.blue800}
+              date={docId}
+              fullReport={`${globalData} ${geopoliticsData}`}
             />
           </Container>
         </Panel>

@@ -1,4 +1,4 @@
-import { poppins } from "../constants/fonts";
+import { poppins } from "../../constants/fonts";
 import {
   Button,
   Card,
@@ -19,6 +19,7 @@ const CardSection = ({ ...props }) => {
   const { title, text, color, fullReport } = props;
   const [toggle, setToggle] = useState(false);
   const [summary, setSummary] = useState<any>();
+  const [geop, setGeop] = useState<any>();
   const [query, setQuery] = useState([]);
 
   const inputRef = useRef<any>();

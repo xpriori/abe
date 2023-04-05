@@ -1,26 +1,30 @@
+import Head from "next/head";
 import styles from "./dashboard.module.css";
 import { Container, NextUIProvider, Spacer } from "@nextui-org/react";
 import Panel from "../components/panel";
 import CardSection from "../components/cardSection";
-import { COLORS } from "../constants/colors";
-import { poppinsBold } from "../constants/fonts";
+import { COLORS } from "../../constants/colors";
+import { poppinsBold } from "../../constants/fonts";
 import { doc, getDoc, collection } from "firebase/firestore";
-import { db } from "../utils/🔥";
+import { db } from "../../utils/🔥";
 import { useEffect, useState } from "react";
 import NavbarComponent from "./navbar";
 
 const Main = () => {
   const today = new Date().toDateString();
-  const [data, setData] = useState<any>();
-  const [organized, setOrganized] = useState<any>();
-  const dbInstance = collection(db, "global");
+  const [globalData, setGlobalData] = useState<any>();
+  const [geopoliticsData, setGeopoliticsData] = useState<any>();
+  const [organizedGlobal, setOrganizedGlobal] = useState<any>();
+  const [organizedGeopolitics, setOrganizedGeopolitics] = useState<any>();
+  const globalInstance = collection(db, "global");
+  const geopoliticsInstance = collection(db, "geopolitics");
 
   const [windowSize, setWindowSize] = useState({
     width: undefined,
     height: undefined,
   });
 
-  async function Organizer(text: string) {
+  async function Organizer(text: string, callback) {
     try {
       const response = await fetch("/api/summary", {
         method: "POST",
@@ -33,19 +37,22 @@ const Main = () => {
       const org = await response.json();
       if (response.status !== 200) {
         throw (
-          data.error ||
+          globalData.error ||
           new Error(`Request failed with status ${response.status}`)
         );
       }
 
-      setOrganized(org.result);
+      callback(org.result);
     } catch (error) {
       return error;
     }
   }
 
+  ///////////////////////////
+  // -*- GLOBAL INSTANCE -*-
+  ///////////////////////////
   useEffect(() => {
-    const docRef = doc(dbInstance, today);
+    const docRef = doc(globalInstance, today);
 
     getDoc(docRef).then((doc) => {
       const data = doc.data();
@@ -62,7 +69,7 @@ const Main = () => {
       });
 
       const report = headlines.join(", ");
-      setData(report);
+      setGlobalData(report);
     });
 
     return () => {
@@ -71,8 +78,41 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    if (data) Organizer(data);
-  }, [data]);
+    if (globalData) Organizer(globalData, setOrganizedGlobal);
+  }, [globalData]);
+
+  /////////////////////////////////
+  // -*- GEOPOLITICS INSTANCE -*-
+  /////////////////////////////////
+  useEffect(() => {
+    const docRef = doc(geopoliticsInstance, today);
+
+    getDoc(docRef).then((doc) => {
+      const data = doc.data();
+      const items = [];
+      console.log(data);
+
+      data &&
+        data.items.forEach((element) => {
+          items.push(element);
+        });
+
+      const headlines = items.map((item) => {
+        return item["headlines"];
+      });
+
+      const report = headlines.join(", ");
+      setGeopoliticsData(report);
+    });
+
+    return () => {
+      docRef;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (geopoliticsData) Organizer(geopoliticsData, setOrganizedGeopolitics);
+  }, [geopoliticsData]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -93,6 +133,9 @@ const Main = () => {
 
   return (
     <NextUIProvider>
+      <Head>
+        <title>World News</title>
+      </Head>
       <NavbarComponent />
 
       <div className={styles.body}>
@@ -106,14 +149,14 @@ const Main = () => {
           <Container style={{ alignItems: "center" }}>
             <CardSection
               title="World Economy"
-              text={organized}
+              text={organizedGlobal}
               color={COLORS.blue800}
-              fullReport={data}
+              fullReport={globalData}
             />
             <Spacer y={2} />
             <CardSection
               title="Geopolitics"
-              text={"data && data.global.geopolitics"}
+              text={organizedGeopolitics}
               color={COLORS.blue800}
             />
             <Spacer y={2} />

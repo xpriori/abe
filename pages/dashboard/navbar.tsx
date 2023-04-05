@@ -2,8 +2,8 @@ import Image from "next/image";
 import styles from "./dashboard.module.css";
 import { Button } from "@nextui-org/react";
 import { RiUserLine } from "react-icons/ri";
-import { poppins, poppinsBold } from "../constants/fonts";
-import { COLORS } from "../constants/colors";
+import { poppins, poppinsBold } from "../../constants/fonts";
+import { COLORS } from "../../constants/colors";
 
 const NavbarComponent = () => {
   const date = new Date().toDateString();

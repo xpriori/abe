@@ -51,7 +51,8 @@ export default async function (req, res) {
 }
 
 function generatePrompt(text) {
-  return `Please organize data collected in a reporting manner.
+  return `Please organize data collected in a reporting manner. This is world economic report. Do not ommit 
+  important key points. Also provide markdown styling to the output for viewing convenience. Remove ads.
 
 data: ${text}
 report:`;

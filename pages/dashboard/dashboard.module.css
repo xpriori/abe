@@ -1,0 +1,77 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+  min-height: 3vh;
+  padding: 20px 20px;
+  color: #0d0b33;
+  background-color: #f1f3f5;
+  margin: 0px;
+}
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.subtitleContainer {
+  background-color: #e6e8eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: 20px; */
+  padding: 5px 30px;
+  margin-left: 30px;
+  border-radius: 5px;
+}
+.subtitle {
+  font-size: 0.75rem;
+  /* letter-spacing: 1px; */
+  color: #0d0b33;
+}
+
+.cards {
+  /* display: flex; */
+  flex-direction: row;
+}
+
+.body {
+  height: 80vh;
+  /* display: flex; */
+  justify-content: center;
+  background-color: white;
+  /* padding: 10px; */
+}
+
+.titleContainer {
+  background-color: #edf5ff;
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+}
+.titleText {
+  margin-left: 10px;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+}
+
+.dateContainer {
+  /* background-color: #e6e8eb; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* height: 20px; */
+  padding: 5px 30px;
+  margin-left: 30px;
+  border-radius: 5px;
+}
+
+.date {
+  font-size: 0.75rem;
+  color: #004799;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}

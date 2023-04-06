@@ -8,17 +8,19 @@ import { doc, getDoc, collection } from "firebase/firestore";
 import { db } from "../../utils/🔥";
 import { useEffect, useState } from "react";
 import NavbarComponent from "./navbar";
+import splitString from "../../utils/➗";
+import callOrganizer from "../../utils/callOrganizer";
 
 const Main = () => {
   const today = new Date().toDateString();
-  const [globalData, setGlobalData] = useState<any>();
-  const [geopoliticsData, setGeopoliticsData] = useState<any>();
-  const [phData, setPhData] = useState<any>();
-  const [docId, setDocId] = useState<any>();
-  const [organizedGlobal, setOrganizedGlobal] = useState<any>();
-  const [organizedGeopolitics, setOrganizedGeopolitics] = useState<any>();
-  const [organizedFinal, setOrganizedFinal] = useState<any>();
-  const [organizedPh, setOrganizedPh] = useState<any>();
+  const [globalData, setGlobalData] = useState<string>();
+  const [geopoliticsData, setGeopoliticsData] = useState<string>();
+  const [phData, setPhData] = useState<string>();
+  const [docId, setDocId] = useState<string>();
+  const [organizedGlobal, setOrganizedGlobal] = useState<string>();
+  const [organizedGeopolitics, setOrganizedGeopolitics] = useState<string>();
+  const [organizedFinal, setOrganizedFinal] = useState<string>();
+  const [organizedPh, setOrganizedPh] = useState<string>();
   const globalInstance = collection(db, "global");
   const geopoliticsInstance = collection(db, "geopolitics");
   const phInstance = collection(db, "ph");
@@ -27,30 +29,6 @@ const Main = () => {
     width: undefined,
     height: undefined,
   });
-
-  async function Organizer(text: string, callback) {
-    try {
-      const response = await fetch("/api/summary", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text }),
-      });
-
-      const org = await response.json();
-      if (response.status !== 200) {
-        throw (
-          globalData.error ||
-          new Error(`Request failed with status ${response.status}`)
-        );
-      }
-
-      callback(org.result);
-    } catch (error) {
-      return error;
-    }
-  }
 
   ///////////////////////////
   // -*- GLOBAL INSTANCE -*-
@@ -81,7 +59,9 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    if (globalData) Organizer(globalData, setOrganizedGlobal);
+    if (globalData) {
+      callOrganizer(globalData, setOrganizedGlobal);
+    }
   }, [globalData]);
 
   /////////////////////////////////
@@ -113,12 +93,12 @@ const Main = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (organizedGlobal) Organizer(geopoliticsData, setOrganizedGeopolitics);
-  }, [organizedGlobal]);
+  // useEffect(() => {
+  //   if (organizedGlobal) Organizer(geopoliticsData, setOrganizedGeopolitics);
+  // }, [organizedGlobal]);
 
   ///////////////////////////////////////////////////////////////////////////
-  // -*- FINAL GLOBAL REPORT -*- ///////////////////////////////////////////
+  // -*- FINAL GLOBAL REPORT -*- ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////
 
   async function GenerateFinal(eco: string, geo: string, callback) {
@@ -134,7 +114,7 @@ const Main = () => {
       const org = await response.json();
       if (response.status !== 200) {
         throw (
-          globalData.error ||
+          org.error ||
           new Error(`Request failed with status ${response.status}`)
         );
       }
@@ -145,10 +125,10 @@ const Main = () => {
     }
   }
 
-  useEffect(() => {
-    if (organizedGeopolitics)
-      GenerateFinal(globalData, geopoliticsData, setOrganizedFinal);
-  }, [organizedGeopolitics]);
+  // useEffect(() => {
+  //   if (organizedGeopolitics)
+  //     GenerateFinal(globalData, geopoliticsData, setOrganizedFinal);
+  // }, [organizedGeopolitics]);
 
   /////////////////////////////////
   // -*- PHILIPPINE MARKET INSTANCE -*-
@@ -158,7 +138,7 @@ const Main = () => {
 
     getDoc(docRef).then((doc) => {
       const data = doc.data();
-      setDocId(doc.id);
+
       const items = [];
 
       data &&
@@ -179,9 +159,9 @@ const Main = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (organizedFinal) Organizer(phData, setOrganizedPh);
-  }, [organizedFinal]);
+  // useEffect(() => {
+  //   if (organizedFinal) Organizer(phData, setOrganizedPh);
+  // }, [organizedFinal]);
 
   ///////////////////////////////////////
 
@@ -214,10 +194,11 @@ const Main = () => {
               title={`World News`}
               text={organizedGlobal}
               color={COLORS.blue800}
-              fullReport={globalData}
+              fullReport={"globalData"}
               date={docId}
             />
-            <Spacer y={2} />
+
+            {/* <Spacer y={2} />
             <CardSection
               title={`Geopolitics`}
               text={organizedGeopolitics}
@@ -232,11 +213,11 @@ const Main = () => {
               color={COLORS.blue800}
               date={docId}
               fullReport={`${globalData} ${geopoliticsData}`}
-            />
+            /> */}
           </Container>
         </Panel>
 
-        <Panel icon="🇵🇭" title="THE PHILIPPINES" color={"black"}>
+        {/* <Panel icon="🇵🇭" title="THE PHILIPPINES" color={"black"}>
           <Container style={{ alignItems: "center" }}>
             <CardSection
               title={`Market Summary`}
@@ -246,7 +227,7 @@ const Main = () => {
               fullReport={phData}
             />
           </Container>
-        </Panel>
+        </Panel> */}
       </div>
     </NextUIProvider>
   );

@@ -150,7 +150,7 @@ const CardSection = ({ ...props }) => {
           <Spacer y={1} />
 
           {/* QUERY */}
-          {query.length ? <Card.Divider className={styles.divider} /> : null}
+
           {query.length ? (
             <div className={styles.queryMain}>
               <div className={styles.querySubmain}>

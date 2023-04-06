@@ -8,7 +8,6 @@ import { doc, getDoc, collection } from "firebase/firestore";
 import { db } from "../../utils/🔥";
 import { useEffect, useState } from "react";
 import NavbarComponent from "./navbar";
-import splitString from "../../utils/➗";
 import callOrganizer from "../../utils/callOrganizer";
 
 const Main = () => {
@@ -93,9 +92,10 @@ const Main = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (organizedGlobal) Organizer(geopoliticsData, setOrganizedGeopolitics);
-  // }, [organizedGlobal]);
+  useEffect(() => {
+    if (organizedGlobal)
+      callOrganizer(geopoliticsData, setOrganizedGeopolitics);
+  }, [organizedGlobal]);
 
   ///////////////////////////////////////////////////////////////////////////
   // -*- FINAL GLOBAL REPORT -*- ////////////////////////////////////////////
@@ -125,10 +125,10 @@ const Main = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if (organizedGeopolitics)
-  //     GenerateFinal(globalData, geopoliticsData, setOrganizedFinal);
-  // }, [organizedGeopolitics]);
+  useEffect(() => {
+    if (organizedGeopolitics)
+      GenerateFinal(globalData, geopoliticsData, setOrganizedFinal);
+  }, [organizedGeopolitics]);
 
   /////////////////////////////////
   // -*- PHILIPPINE MARKET INSTANCE -*-
@@ -159,9 +159,9 @@ const Main = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (organizedFinal) Organizer(phData, setOrganizedPh);
-  // }, [organizedFinal]);
+  useEffect(() => {
+    if (organizedFinal) callOrganizer(phData, setOrganizedPh);
+  }, [organizedFinal]);
 
   ///////////////////////////////////////
 
@@ -198,36 +198,47 @@ const Main = () => {
               date={docId}
             />
 
-            {/* <Spacer y={2} />
-            <CardSection
-              title={`Geopolitics`}
-              text={organizedGeopolitics}
-              color={COLORS.blue800}
-              date={docId}
-              fullReport={geopoliticsData}
-            />
-            <Spacer y={2} />
-            <CardSection
-              title={`Final Report - Global`}
-              text={organizedFinal}
-              color={COLORS.blue800}
-              date={docId}
-              fullReport={`${globalData} ${geopoliticsData}`}
-            /> */}
+            {organizedGlobal ? (
+              <>
+                <Spacer y={2} />
+                <CardSection
+                  title={`Geopolitics`}
+                  text={organizedGeopolitics}
+                  color={COLORS.blue800}
+                  date={docId}
+                  fullReport={geopoliticsData}
+                />
+              </>
+            ) : null}
+
+            {organizedGeopolitics ? (
+              <>
+                <Spacer y={2} />
+                <CardSection
+                  title={`Final Report - Global`}
+                  text={organizedFinal}
+                  color={COLORS.blue800}
+                  date={docId}
+                  fullReport={`${globalData} ${geopoliticsData}`}
+                />
+              </>
+            ) : null}
           </Container>
         </Panel>
 
-        {/* <Panel icon="🇵🇭" title="THE PHILIPPINES" color={"black"}>
-          <Container style={{ alignItems: "center" }}>
-            <CardSection
-              title={`Market Summary`}
-              text={organizedPh}
-              color={COLORS.blue800}
-              date={docId}
-              fullReport={phData}
-            />
-          </Container>
-        </Panel> */}
+        {organizedFinal ? (
+          <Panel icon="🇵🇭" title="THE PHILIPPINES" color={"black"}>
+            <Container style={{ alignItems: "center" }}>
+              <CardSection
+                title={`Market Summary`}
+                text={organizedPh}
+                color={COLORS.blue800}
+                date={docId}
+                fullReport={phData}
+              />
+            </Container>
+          </Panel>
+        ) : null}
       </div>
     </NextUIProvider>
   );

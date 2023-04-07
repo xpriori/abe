@@ -6,6 +6,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
+  console.log("Query Function Called");
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -53,19 +54,34 @@ export default async function (req, res) {
 }
 
 function generatePrompt(source, text) {
-  return `Based from the ${source}, provide assistance requested from ${text}.
+  return `Based from the source: ${source}, provide assistance requested from query: ${text}.
   Before you begin, you must follow these strict guidelines.
 
-  Instruction 1: You do not provide any information outside the topic from ${source}.
-Instruction 2: You work at Comptrolla as AI Assistant Reporter.
-Instruction 3: Look for a keyword from ${text} and look it up from ${source} to provide appropriate response. 
-Instruction 4: If the ${text} is out of context from the ${source}, check the source 
-for keywords that may relate to the ${text}. If not then apologize and let them know 
-about you focused on assisting regarding today's market news report.
-Instruction 5: Be helpful and jolly.
-Instruction 6: Be very brief with your responses.
+  Instruction 1: You do not provide any information outside from source.
+  Instruction 2: You work at Comptrolla as AI Assistant Reporter.
+  Instruction 3: Look for a keyword from query and look it up from source to provide appropriate response. 
+  Instruction 4: If the any keyword is not on the source. Do not provide any answer but instead apologize for not having any data to provide 
+  relevant answer.
+  Instruction 4: If the query is out of context from the source, check the source 
+  for keywords that may relate to the query. If not, then apologize and let them know 
+  that you are focused on assisting them regarding today's market report.
+  Instruction 5: Be helpful and jolly.
+  Instruction 6: Do not reference globalData. Instead say our data shows
+  
 
-
-input: ${text}
-ouput:`;
+source: 1. US Equity Futures Steady Before Key Jobs Data: Markets Wrap - Treasuries Set for a Super-Sized Jobs Reaction on Good Friday - China Traders Borrow Trillions to Juice Returns in Bond Market - Blackstone’s SVB Deal That Got Away Shows Private Equity Sidelined in Crisis 
+2. Commercial Real Estate: - Prices Could Tumble 40%, Rivaling 2008 Financial Crisis: Morgan Stanley 
+3. Funds: - Caught ‘Off Guard,’ Missing Out on Stock Market’s Big Rally in First Quarter 
+4. Oil Production Cuts: - Threw ‘Another Log on the Fire’ in Fed’s Inflation Fight, Says BlackRock’s Rick Rieder 
+5. Treasury Bond Market: - What ‘Unprecedented’ Volatility Looks Like 
+6. Precious Metals: - Uranium Having a 'Renaissance' - Gold and Mining ETFs Surge 
+7. Environmentally-Friendly Stocks: - Gen Z Cares About the Environment 
+8. Federal Reserve: - Letting Everyone Who Wants a Job Have One is Not the Only Priority 
+9. Treasury Yields: - Treasury Yields Tick Up Ahead of U.S. Jobs Report, With Many Markets Closed for Holiday 
+10. Tech: - Samsung to Cut Chip Output to Ride Out Downturn - Paramount Explores Sale of Majority Stake in Noggin Streaming Service - Airbus Deliveries Fell to 127 Jets in Q1 - Toyota to Launch 10 New Battery EV Models by 2026 - China's Alibaba Invites Businesses to Trial AI Chatbot 
+11. Miscellaneous: - Italy's Berlusconi Spends Second Night in Hospital - World Food Prices Fall for 12th Month Running in March - Virgin Orbit Bankruptcy Casts Shadow Over Japan's Space Dreams - South Korea to Offer $5.3 Billion in Financing to Support Battery Investment in North America - Japan Stocks Higher at Close of Trade
+query: Tell me more about Japan Market
+response: Japan Market showed strong movement today and closed high today.
+query: ${text} today
+response:`;
 }

@@ -198,7 +198,7 @@ const Main = () => {
               date={docId}
             />
 
-            {organizedGlobal ? (
+            {geopoliticsData ? (
               <>
                 <Spacer y={2} />
                 <CardSection

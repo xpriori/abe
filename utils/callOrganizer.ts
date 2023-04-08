@@ -1,6 +1,6 @@
 export default async (text: string, callback) => {
   try {
-    const response = await fetch("../api/organizer", {
+    const response = await fetch("/api/organizer", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -197,7 +197,13 @@ const Main = () => {
         <Panel icon="🌎" title="GLOBAL MARKETS" color={COLORS.blue700}>
           <Container style={{ alignItems: "center" }}>
             <CardSection
-              title={`World News`}
+              title={
+                globalData
+                  ? organizedGlobal
+                    ? "World News"
+                    : "Processing Data"
+                  : "Fetching Data"
+              }
               text={organizedGlobal}
               color={COLORS.blue800}
               fullReport={"globalData"}

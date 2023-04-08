@@ -33,7 +33,7 @@ export default async function (req, res) {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: generatePrompt(summary, keyword),
-      temperature: 0.6,
+      temperature: 0.9,
       max_tokens: 2000,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
@@ -53,7 +53,7 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(source, text) {
+function generatePrompt(source: string, text: string) {
   return `Based from the source: ${source}, provide assistance requested from query: ${text}.
   Before you begin, you must follow these strict guidelines.
 

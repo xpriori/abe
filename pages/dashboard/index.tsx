@@ -183,7 +183,13 @@ const Main = () => {
   return (
     <NextUIProvider>
       <Head>
-        <title>World News</title>
+        <title>
+          {globalData
+            ? organizedGlobal
+              ? "World News"
+              : "Processing Data"
+            : "Fetching Data"}
+        </title>
       </Head>
       <NavbarComponent />
 

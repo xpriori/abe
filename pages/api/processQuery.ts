@@ -66,21 +66,12 @@ function generatePrompt(source, text) {
   for keywords that may relate to the query. If not, then apologize and let them know 
   that you are focused on assisting them regarding today's market report.
   Instruction 5: Be helpful and jolly.
-  Instruction 6: Do not reference globalData. Instead say our data shows
+  Instruction 6: Do not reference globalData. Instead just provide the appropriate response.
   
 
-source: 1. US Equity Futures Steady Before Key Jobs Data: Markets Wrap - Treasuries Set for a Super-Sized Jobs Reaction on Good Friday - China Traders Borrow Trillions to Juice Returns in Bond Market - Blackstone’s SVB Deal That Got Away Shows Private Equity Sidelined in Crisis 
-2. Commercial Real Estate: - Prices Could Tumble 40%, Rivaling 2008 Financial Crisis: Morgan Stanley 
-3. Funds: - Caught ‘Off Guard,’ Missing Out on Stock Market’s Big Rally in First Quarter 
-4. Oil Production Cuts: - Threw ‘Another Log on the Fire’ in Fed’s Inflation Fight, Says BlackRock’s Rick Rieder 
-5. Treasury Bond Market: - What ‘Unprecedented’ Volatility Looks Like 
-6. Precious Metals: - Uranium Having a 'Renaissance' - Gold and Mining ETFs Surge 
-7. Environmentally-Friendly Stocks: - Gen Z Cares About the Environment 
-8. Federal Reserve: - Letting Everyone Who Wants a Job Have One is Not the Only Priority 
-9. Treasury Yields: - Treasury Yields Tick Up Ahead of U.S. Jobs Report, With Many Markets Closed for Holiday 
-10. Tech: - Samsung to Cut Chip Output to Ride Out Downturn - Paramount Explores Sale of Majority Stake in Noggin Streaming Service - Airbus Deliveries Fell to 127 Jets in Q1 - Toyota to Launch 10 New Battery EV Models by 2026 - China's Alibaba Invites Businesses to Trial AI Chatbot 
-11. Miscellaneous: - Italy's Berlusconi Spends Second Night in Hospital - World Food Prices Fall for 12th Month Running in March - Virgin Orbit Bankruptcy Casts Shadow Over Japan's Space Dreams - South Korea to Offer $5.3 Billion in Financing to Support Battery Investment in North America - Japan Stocks Higher at Close of Trade
+source: source
 query: Tell me more about Japan Market
+Instruction: You will get the keywords from the query and look up information about it from source and use it in your response.
 response: Japan Market showed strong movement today and closed high today.
 query: ${text} today
 response:`;

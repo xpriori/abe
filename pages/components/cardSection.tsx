@@ -118,7 +118,7 @@ const CardSection = ({ ...props }) => {
             {text ? (
               <Text className={styles.content}>{text}</Text>
             ) : (
-              <Loading color="default" size="sm" />
+              <Loading type="points-opacity" color="default" size="sm" />
             )}
           </Row>
           {text ? (
